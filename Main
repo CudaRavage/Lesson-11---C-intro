@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace moreJunk
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            
+            int userSelection = 0;
+            Console.WriteLine("=====================");
+            Console.WriteLine("Movie Rating Database");
+            Console.WriteLine("=====================");
+            fromException:
+            try
+            {
+
+                do
+                {
+                    Console.Write("\n1 = Add Movie\n2 = Read Database\n3 = Exit\nPlease enter a selection: ");
+                    userSelection = Convert.ToInt32(Console.ReadLine());
+
+
+                    switch (userSelection)
+                    {
+
+                        case 1:
+                            StreamWriter appFile = File.AppendText("output.txt");
+                            Console.WriteLine("\nPlease enter a title and rating out of 10");
+                            appFile.WriteLine(Console.ReadLine());
+                            appFile.Close();
+                            continue;
+
+                        case 2:
+                            StreamReader inFile = File.OpenText("output.txt");
+                            string s = inFile.ReadToEnd();
+                            Console.WriteLine("\n");
+                            Console.WriteLine(s);
+                            inFile.Close();
+                            continue;
+                    }
+                }
+                while (userSelection != 3);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.WriteLine("Please try again using 1, 2, or 3");
+                goto fromException;
+            }
+        }
+    }
+}
